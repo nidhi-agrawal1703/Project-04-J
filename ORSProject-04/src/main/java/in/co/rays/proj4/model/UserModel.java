@@ -158,7 +158,7 @@ public class UserModel {
 
 		} catch (Exception e) {
 			// TODO: handle exception
-			throw new ApplicationException("Exception : Exception in get roles");
+			throw new ApplicationException("Exception : Exception in get roles"+e.getMessage());
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
