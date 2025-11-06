@@ -9,9 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import in.co.rays.proj4.bean.BaseBean;
 import in.co.rays.proj4.bean.ExpertiseBean;
+import in.co.rays.proj4.bean.RoleBean;
 import in.co.rays.proj4.exception.ApplicationException;
 import in.co.rays.proj4.exception.DuplicateRecordException;
 import in.co.rays.proj4.model.ExpertiseModel;
+import in.co.rays.proj4.model.RoleModel;
 import in.co.rays.proj4.util.DataUtility;
 import in.co.rays.proj4.util.DataValidator;
 import in.co.rays.proj4.util.PropertyReader;
@@ -55,7 +57,22 @@ public class ExpertiseCtl extends BaseCtl {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		long id = DataUtility.getLong(request.getParameter("id"));
+
+		ExpertiseModel model = new ExpertiseModel();
+
+		if (id > 0) {
+			try {
+				ExpertiseBean bean = model.findByPk(id);
+				ServletUtility.setBean(bean, request);
+			} catch (ApplicationException e) {
+				e.printStackTrace();
+				ServletUtility.handleException(e, request, response);
+				return;
+			}
+		}
 		ServletUtility.forward(getView(), request, response);
+
 	}
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -90,6 +107,30 @@ public class ExpertiseCtl extends BaseCtl {
 		}else if(OP_RESET.equalsIgnoreCase(op)) {
 			ServletUtility.redirect(ORSView.EXPERTISE_CTL, request, response);
 			return;
+		}else if(OP_UPDATE.equalsIgnoreCase(op)) {
+			ExpertiseBean bean = (ExpertiseBean) populateBean(request);
+
+			try {
+				if (id > 0) {
+					model.update(bean);
+				}
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setSuccessMessage("Data is successfully updated", request);
+			} catch (DuplicateRecordException e) {
+				ServletUtility.setBean(bean, request);
+				ServletUtility.setErrorMessage("Role already exists", request);
+			} catch (ApplicationException e) {
+				e.printStackTrace();
+				ServletUtility.handleException(e, request, response);
+				return;
+
+		} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
+
 		}
 		ServletUtility.forward(getView(), request, response);
 	}
