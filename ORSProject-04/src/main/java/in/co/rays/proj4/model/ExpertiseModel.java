@@ -3,10 +3,12 @@ package in.co.rays.proj4.model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 import in.co.rays.proj4.bean.ExpertiseBean;
+import in.co.rays.proj4.bean.RoleBean;
 import in.co.rays.proj4.exception.ApplicationException;
 import in.co.rays.proj4.exception.DatabaseException;
 import in.co.rays.proj4.exception.DuplicateRecordException;
@@ -50,10 +52,15 @@ public class ExpertiseModel {
 			long nextPk=nextPk();
 			conn=JDBCDataSource.getconnection();
 			conn.setAutoCommit(false);
-			PreparedStatement pstmt=conn.prepareStatement("Insert into st_expertise values(?,?,?)");
+			PreparedStatement pstmt=conn.prepareStatement("Insert into st_expertise values(?,?,?,?,?,?,?)");
 			pstmt.setLong(1, nextPk);
 			pstmt.setString(2, bean.getName());
 			pstmt.setString(3, bean.getDescription());
+			pstmt.setString(4,"root");
+			pstmt.setString(5, "root");
+			pstmt.setTimestamp(6,new Timestamp(System.currentTimeMillis()));
+			pstmt.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
+			
 			int i=pstmt.executeUpdate();
 			conn.commit();
 			pstmt.close();
@@ -74,8 +81,13 @@ public class ExpertiseModel {
 		}
 	}
 	
-	public static void update(ExpertiseBean bean) throws ApplicationException {
+	public static void update(ExpertiseBean bean) throws Exception {
 		Connection conn=null;
+		ExpertiseBean duplicateRole=findByName(bean.getName());
+		if(duplicateRole!=null && duplicateRole.getId()!=bean.getId()) {
+			throw new Exception("Expertise name already exists");
+		}
+		
 		
 		try {
 			conn=JDBCDataSource.getconnection();
