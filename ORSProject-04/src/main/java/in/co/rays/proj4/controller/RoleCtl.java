@@ -127,8 +127,8 @@ public class RoleCtl extends BaseCtl {
 				e.printStackTrace();
 			}
 		
+			}
 		ServletUtility.forward(getView(), request, response);
-	}
 		}
 	
 	@Override
