@@ -91,7 +91,7 @@
 	  <a href="<%=ORSView.ROLE_CTL%>">Add Role</a> | 
 	  <a href="<%=ORSView.ROLE_LIST_CTL%>">Role List</a> |
 	  <a href="<%=ORSView.EXPERTISE_CTL%>">Add Expertise</a> | 
-	  <a href="<%=ORSView.EXPERTISE_LIST_CTL%>">Expertise List</a> 
+	  <a href="<%=ORSView.EXPERTISE_LIST_CTL%>">Expertise List</a> |
 	  <%
  	}
 
