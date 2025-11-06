@@ -57,6 +57,12 @@ public interface ORSView {
 	public String COLLEGE_LIST_VIEW = PAGE_FOLDER + "/CollegeListView.jsp";
 	public String COLLEGE_LIST_CTL = APP_CONTEXT + "/ctl/CollegeListCtl";
 
+	public String EXPERTISE_VIEW = PAGE_FOLDER + "/ExpertiseView.jsp";
+	public String EXPERTISE_CTL = APP_CONTEXT + "/ctl/ExpertiseCtl";
+	
+	public String EXPERTISE_LIST_VIEW = PAGE_FOLDER + "/ExpertiseListView.jsp";
+	public String EXPERTISE_LIST_CTL = APP_CONTEXT + "/ctl/ExpertiseListCtl";
+
 	public String STUDENT_VIEW = PAGE_FOLDER + "/StudentView.jsp";
 	public String STUDENT_CTL = APP_CONTEXT + "/ctl/StudentCtl";
 
